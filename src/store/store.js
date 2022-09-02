@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import {setLocalStorageMiddleware } from "./slice"
+import {setLocalStorageMiddleware, newsSlice, clipSlice, historySlice } from "./slice"
 
 export const store = configureStore({
   reducer: {
-    // news,
-    // clippednews,
-    // history,
+    news: newsSlice.reducer,
+    clippednews: clipSlice.reducer,
+    history: historySlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(setLocalStorageMiddleware),
