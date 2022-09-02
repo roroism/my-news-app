@@ -1,8 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import ClipPage from "./components/ClipPage";
+import MainPage from "./components/MainPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render( <App />
+root.render(   
+<Provider store={ store }>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<MainPage/>}/>
+      <Route path="/clip" element={<ClipPage/>}/>
+      <Route main path="*" element={<Navigate replace to="/"/>}/>
+    </Routes>
+  </BrowserRouter>
+</Provider>
 );

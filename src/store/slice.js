@@ -53,10 +53,11 @@ export const clipSlice = createSlice({
   },
 });
 
+const initialHistoryList = [];
 
 export const historySlice = createSlice({
   name: "history",
-  // initialState: initialHistoryList,
+  initialState: initialHistoryList,
   reducers: {
     addHistory: (state, action) => {
       state.history = action.payload;

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import {setLocalStorageMiddleware, newsSlice, clipSlice, historySlice } from "./slice"
+import { setLocalStorageMiddleware, newsSlice, clipSlice, historySlice } from "./slice"
 
 export const store = configureStore({
   reducer: {
