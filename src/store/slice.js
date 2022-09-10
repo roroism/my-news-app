@@ -14,8 +14,15 @@ export const setHistoryToLocalStorage = createAction(
 export const setLocalStorageMiddleware = (store) => (next) => (action) => {
   console.log("Middleware 진입", action);
 
-  if (action === "newsSlice/fetchNewsbySearch/fulfilled") {
+  if (action.type === "newsSlice/fetchNewsbySearch/fulfilled") {
     console.log("newsSlice/fetchNewsbySearch/fulfilled 진입");
+    // 중복제거
+    const storeHistoryList = [...store.getState().history.history];
+    storeHistoryList.unshift(action.meta.arg.q);
+    const updateHistoryList = [...new Set(storeHistoryList)];
+    if (updateHistoryList.length >= 6) updateHistoryList.length = 5;
+    console.log("storeHistoryList : ", updateHistoryList);
+    store.dispatch(historySlice.actions.addHistory(updateHistoryList));
   }
 
   if (action.type === "setHistoryToLocalStorage") {
@@ -43,7 +50,7 @@ export const fetchNewsbySearch = createAsyncThunk(
       console.log("createAsyncThunk 진입");
       const res = await fetch(getUrl(searchInfo));
       const jsonData = await res.json();
-      console.log("jsonData", jsonData);
+      // console.log("jsonData", jsonData);
       return jsonData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -59,11 +66,25 @@ export const newsSlice = createSlice({
     error: "",
   },
   reducers: {},
-  extraRedecers: (builder) => {
-    // builder.addCase(fetchUserById.fulfilled, (state, action) => {
-    //   // Add user to the state array
-    //   state.entities.push(action.payload)
-    // })
+  extraReducers: (builder) => {
+    builder.addCase(fetchNewsbySearch.pending, (state, action) => {
+      state.loading = true;
+      state.news = [];
+      state.error = "";
+    });
+
+    builder.addCase(fetchNewsbySearch.fulfilled, (state, action) => {
+      console.log("action.payload.response.docs", action.payload.response.docs);
+      state.news = action.payload.response.docs;
+      state.loading = false;
+      state.error = "";
+    });
+
+    builder.addCase(fetchNewsbySearch.rejected, (state, action) => {
+      state.loading = false;
+      state.news = [];
+      state.error = action.payload;
+    });
   },
 });
 
@@ -112,3 +133,5 @@ export const historySlice = createSlice({
     },
   },
 });
+
+export const {} = newsSlice.actions;
