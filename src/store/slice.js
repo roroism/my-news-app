@@ -2,7 +2,8 @@ import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_KEY } from "../api/apiKey";
 
 export const getUrl = ({ q, page }) =>
-  `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${q}&page=${page}&sort=newest&api-key=${API_KEY}`;
+  // `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${q}&page=${page}&sort=newest&api-key=${API_KEY}`;
+  `https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=headline:("${q}")&page=${page}&sort=newest&api-key=${API_KEY}`;
 
 const SEARCH_HISTORY_KEY = "SEARCH_HISTORY";
 const CLIP_KEY = "CLIP_HISTORY";
