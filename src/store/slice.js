@@ -1,4 +1,5 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+// import { current } from "@reduxjs/toolkit";
 
 export const getUrl = ({ q, page }) =>
   // `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${q}&page=${page}&sort=newest&api-key=${API_KEY}`;
@@ -28,7 +29,7 @@ export const setLocalStorageMiddleware = (store) => (next) => (action) => {
   if (action.type === "setHistoryToLocalStorage") {
     console.log("setHistoryToLocalStorage 진입");
     const storeHistoryList = [...store.getState().history.history];
-
+    console.log("storeHistoryList : ", storeHistoryList);
     try {
       localStorage.setItem(
         SEARCH_HISTORY_KEY,
@@ -47,7 +48,7 @@ export const fetchNewsbySearch = createAsyncThunk(
   "newsSlice/fetchNewsbySearch",
   async (searchInfo, thunkAPI) => {
     try {
-      console.log("createAsyncThunk 진입");
+      console.log("createAsyncThunk 진입 : ", getUrl(searchInfo));
       const res = await fetch(getUrl(searchInfo));
       const jsonData = await res.json();
       // console.log("jsonData", jsonData);
@@ -64,18 +65,34 @@ export const newsSlice = createSlice({
     news: [],
     loading: true,
     error: "",
+    page: 1,
   },
-  reducers: {},
+  reducers: {
+    setPage: (state, action) => {
+      console.log("redux page : ", action.payload);
+      state.page = action.payload;
+      console.log("state.page : ", state.page);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchNewsbySearch.pending, (state, action) => {
       state.loading = true;
-      state.news = [];
+      // state.news = [];
       state.error = "";
     });
 
     builder.addCase(fetchNewsbySearch.fulfilled, (state, action) => {
       console.log("action.payload.response.docs", action.payload.response.docs);
-      state.news = action.payload.response.docs;
+      if (state.page === 1) {
+        console.log("if state.page : ", state.page);
+        state.news = action.payload.response.docs;
+      } else {
+        console.log("if else state.page : ", state.page);
+        // console.log("old state.news", current(state));
+        console.log("old state.news", state);
+        state.news = [...state.news, ...action.payload.response.docs];
+        console.log("new state.news", state.news);
+      }
       state.loading = false;
       state.error = "";
     });
@@ -134,4 +151,4 @@ export const historySlice = createSlice({
   },
 });
 
-export const {} = newsSlice.actions;
+export const { setPage } = newsSlice.actions;
