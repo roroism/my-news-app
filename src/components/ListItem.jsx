@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector, dispatch } from "react-redux";
 import styled from "styled-components";
+import { addClip, deleteClip, updateLocalStorage } from "../store/slice";
+import React, { useState } from "react";
 
 const Button = styled.button`
   outline: 0;
@@ -113,6 +116,32 @@ export default function ListItem({
   multimedia,
   web_url,
 }) {
+  const newsList = useSelector(({ news }) => news.news);
+  const clipNewsList = useSelector(({ history }) => history.clip);
+  const dispatch = useDispatch();
+
+  const callbackWithUpdateLocalStorage = React.useCallback(
+    (callback) => {
+      callback();
+      dispatch(updateLocalStorage());
+    },
+    [dispatch]
+  );
+
+  const handleClipBtnClick = () => {
+    callbackWithUpdateLocalStorage(() => {
+      dispatch(addClip({ id, main, date, section, multimedia, web_url }));
+    });
+  };
+
+  const handleUnClipClick = () => {
+    callbackWithUpdateLocalStorage(() => {
+      dispatch(deleteClip(id));
+    });
+  };
+
+  console.log("ListItem clipNewsList : ", clipNewsList);
+
   return (
     <NewsItem>
       <Article>
@@ -129,7 +158,16 @@ export default function ListItem({
           <PublicDate className="pub_date">
             {date.replace("T", " ").substring(0, 19)}
           </PublicDate>
-          <ClipButton className="clip_button">Clip this</ClipButton>
+          {clipNewsList.map((item) => item.id).includes(id) ? (
+            <ClipButton className="clip_button" onClick={handleUnClipClick}>
+              unClip this
+            </ClipButton>
+          ) : (
+            <ClipButton className="clip_button" onClick={handleClipBtnClick}>
+              Clip this
+            </ClipButton>
+          )}
+
           <AnchorTag
             href={web_url}
             target="_blank"

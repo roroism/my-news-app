@@ -6,8 +6,9 @@ export const getUrl = ({ q, page }) =>
   `https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=headline:("${q}")&page=${page}&sort=newest&api-key=${process.env.REACT_APP_API_KEY}`;
 
 const SEARCH_HISTORY_KEY = "SEARCH_HISTORY";
-const CLIP_KEY = "CLIP_HISTORY";
+const NEWS_CLIP_KEY = "NEWS_CLIP_KEY";
 
+export const updateLocalStorage = createAction("updateClipLocalStorage");
 export const setHistoryToLocalStorage = createAction(
   "setHistoryToLocalStorage"
 );
@@ -24,6 +25,18 @@ export const setLocalStorageMiddleware = (store) => (next) => (action) => {
     if (updateHistoryList.length >= 6) updateHistoryList.length = 5;
     console.log("storeHistoryList : ", updateHistoryList);
     store.dispatch(historySlice.actions.addHistory(updateHistoryList));
+  }
+
+  // {type: "타입이름", payload: {}}
+  if (action.type === "updateClipLocalStorage") {
+    console.log("updateClipLocalStorage 진입");
+    try {
+      const storeClipList = [...store.getState().history.clip];
+      localStorage.setItem(NEWS_CLIP_KEY, JSON.stringify(storeClipList));
+    } catch (e) {
+      throw new Error("LocalStorage를 사용할 수 없습니다.", e);
+    }
+    return;
   }
 
   if (action.type === "setHistoryToLocalStorage") {
@@ -126,7 +139,7 @@ const initialHistoryList = (() => {
   try {
     initialState.history =
       JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY)) || [];
-    initialState.clip = JSON.parse(localStorage.getItem(CLIP_KEY)) || [];
+    initialState.clip = JSON.parse(localStorage.getItem(NEWS_CLIP_KEY)) || [];
   } catch (e) {
     // error
     throw new Error("LocalStorage를 사용할 수 없습니다.", e);
@@ -144,6 +157,7 @@ export const historySlice = createSlice({
     },
     addClip: (state, action) => {
       state.clip.push(action.payload);
+      // localStorage.setItem(NEWS_CLIP_KEY, JSON.stringify(state.is));
     },
     deleteClip: (state, action) => {
       state.clip = state.clip.filter((item) => item._id !== action.payload);
@@ -152,3 +166,4 @@ export const historySlice = createSlice({
 });
 
 export const { setPage } = newsSlice.actions;
+export const { addClip, deleteClip } = historySlice.actions;
