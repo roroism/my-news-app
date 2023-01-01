@@ -25,6 +25,7 @@ export const setLocalStorageMiddleware = (store) => (next) => (action) => {
     if (updateHistoryList.length >= 6) updateHistoryList.length = 5;
     console.log("storeHistoryList : ", updateHistoryList);
     store.dispatch(historySlice.actions.addHistory(updateHistoryList));
+    store.dispatch(setHistoryToLocalStorage());
   }
 
   // {type: "타입이름", payload: {}}
@@ -157,7 +158,6 @@ export const historySlice = createSlice({
     },
     addClip: (state, action) => {
       state.clip.push(action.payload);
-      // localStorage.setItem(NEWS_CLIP_KEY, JSON.stringify(state.is));
     },
     deleteClip: (state, action) => {
       state.clip = state.clip.filter((item) => item.id !== action.payload);

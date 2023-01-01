@@ -4,6 +4,7 @@ import {
   fetchNewsbySearch,
   setHistoryToLocalStorage,
   setPage,
+  SEARCH_HISTORY_KEY,
 } from "../store/slice";
 import styled from "styled-components";
 import ListItem from "./ListItem";
@@ -117,13 +118,13 @@ const MainPage = () => {
   const [toggleDisplay, setToggleDisplay] = useState(false);
 
   console.log("page : ", page);
-  const callbackWithSetHistoryToLocalStorage = useCallback(
-    (callback) => {
-      callback();
-      dispatch(setHistoryToLocalStorage());
-    },
-    [dispatch]
-  );
+  // const callbackWithSetHistoryToLocalStorage = useCallback(
+  //   (callback) => {
+  //     callback();
+  //     dispatch(setHistoryToLocalStorage());
+  //   },
+  //   [searchwords, dispatch]
+  // );
 
   useEffect(() => {
     let setTime;
@@ -131,16 +132,17 @@ const MainPage = () => {
     if (searchwords) {
       setTime = setTimeout(() => {
         dispatch(setPage(1));
-        callbackWithSetHistoryToLocalStorage(() => {
-          dispatch(fetchNewsbySearch({ q: searchwords, page: 1 }));
-        });
+        // callbackWithSetHistoryToLocalStorage(() => {
+        //   dispatch(fetchNewsbySearch({ q: searchwords, page: 1 }));
+        // });
+        dispatch(fetchNewsbySearch({ q: searchwords, page: 1 }));
       }, 500);
     }
 
     return () => {
       clearTimeout(setTime);
     };
-  }, [searchwords, callbackWithSetHistoryToLocalStorage, dispatch]);
+  }, [searchwords, dispatch]);
 
   const handleScroll = () => {
     // if (containerRef.current) {
