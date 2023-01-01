@@ -160,7 +160,7 @@ export const historySlice = createSlice({
       // localStorage.setItem(NEWS_CLIP_KEY, JSON.stringify(state.is));
     },
     deleteClip: (state, action) => {
-      state.clip = state.clip.filter((item) => item._id !== action.payload);
+      state.clip = state.clip.filter((item) => item.id !== action.payload);
     },
   },
 });
