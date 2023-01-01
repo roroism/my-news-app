@@ -82,7 +82,7 @@ const SearchWrapper = styled.div`
       ul {
         width: 100%;
         background-color: #fff;
-        margin: 5px 0;
+        padding: 5px 0;
         li {
           padding: 5px 1rem;
           &:hover {
