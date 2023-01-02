@@ -56,7 +56,7 @@ const SectionSpan = styled.span`
   display: block;
 `;
 
-const MainArticle = styled.strong`
+const MainArticle = styled.h3`
   font-weight: 700;
   font-size: 1.438rem;
   text-overflow: ellipsis;
