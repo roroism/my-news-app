@@ -88,6 +88,15 @@ const ClipButton = styled(Button)`
     background-color: #fff;
     border: 1px solid #666;
   }
+  &.unclip {
+    color: #fff;
+    background-color: coral;
+    border: 1px solid coral;
+    &:hover {
+      color: coral;
+      background-color: #fff;
+    }
+  }
 `;
 
 const AnchorTag = styled.a`
@@ -159,7 +168,10 @@ export default function ListItem({
             {date.replace("T", " ").substring(0, 19)}
           </PublicDate>
           {clipNewsList.map((item) => item.id).includes(id) ? (
-            <ClipButton className="clip_button" onClick={handleUnClipClick}>
+            <ClipButton
+              className="clip_button unclip"
+              onClick={handleUnClipClick}
+            >
               unClip this
             </ClipButton>
           ) : (
