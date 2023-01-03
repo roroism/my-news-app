@@ -15,6 +15,21 @@ const Container = styled.div`
   padding: 0 4%;
 `;
 
+export const HiddenEl = styled.div`
+  display: block;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: polygon(0 0, 0 0, 0 0);
+`;
+
+export const HiddenH1 = HiddenEl.withComponent("h1");
+export const HiddenH2 = HiddenEl.withComponent("h2");
+export const HiddenH3 = HiddenEl.withComponent("h3");
+export const HiddenH4 = HiddenEl.withComponent("h4");
+
 const SearchWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -127,15 +142,17 @@ const MainPage = () => {
   // );
 
   useEffect(() => {
+    if (searchwords === "") return;
+
     let setTime;
 
     if (searchwords) {
       setTime = setTimeout(() => {
-        dispatch(setPage(1));
+        dispatch(setPage(0));
         // callbackWithSetHistoryToLocalStorage(() => {
         //   dispatch(fetchNewsbySearch({ q: searchwords, page: 1 }));
         // });
-        dispatch(fetchNewsbySearch({ q: searchwords, page: 1 }));
+        dispatch(fetchNewsbySearch({ q: searchwords, page: 0 }));
       }, 500);
     }
 
@@ -158,7 +175,7 @@ const MainPage = () => {
     let fullHeight = document.body.scrollHeight; //  margin 값은 포함 x
     const offset = 500;
     setIsScrollBottom(scrollLocation + windowHeight >= fullHeight - offset);
-    console.log("scrollTop : ", scrollLocation);
+    // console.log("scrollTop : ", scrollLocation);
   };
 
   useEffect(() => {
@@ -170,7 +187,7 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log("isScrollBottom : ", isScrollBottom);
+    // console.log("isScrollBottom : ", isScrollBottom);
     if (isScrollBottom) {
       dispatch(setPage(page + 1));
       dispatch(fetchNewsbySearch({ q: searchwords, page: page + 1 }));
@@ -178,56 +195,64 @@ const MainPage = () => {
   }, [isScrollBottom, dispatch]);
 
   const handleChange = (e) => {
-    setSearchWords(e.target.value);
+    setSearchWords(e.target.value.trim());
   };
 
   return (
     <Container ref={containerRef}>
-      <SearchWrapper>
-        <div className="search">
-          <input
-            type="text"
-            onChange={handleChange}
-            onFocus={() => {
-              setToggleDisplay(true);
-            }}
-            onBlur={() => {
-              setToggleDisplay(false);
-            }}
-            placeholder="Search"
-          />
-          <div className="search_btn_wrapper">
-            <button type="button" id="search_btn">
-              검색
-            </button>
-          </div>
-          <div
-            className={"search_history_wrapper" + (toggleDisplay ? " on" : "")}
-          >
-            <ul className="search_history_list">
-              {historyList.map((item) => (
-                <li>
-                  <div key={item}>{item}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </SearchWrapper>
       <Main>
-        <ul>
-          {newsList.map((item) => (
-            <ListItem
-              key={item._id}
-              id={item._id}
-              main={item.headline.main}
-              date={item.pub_date}
-              section={item.section_name}
-              multimedia={item.multimedia}
-              web_url={item.web_url}
-            />
-          ))}
-        </ul>
+        <section>
+          <HiddenH2>Search Area</HiddenH2>
+          <SearchWrapper>
+            <div className="search">
+              <input
+                type="text"
+                onChange={handleChange}
+                onFocus={() => {
+                  if (historyList.length > 0) setToggleDisplay(true);
+                }}
+                onBlur={() => {
+                  setToggleDisplay(false);
+                }}
+                placeholder="Search"
+              />
+              <div className="search_btn_wrapper">
+                <button type="button" id="search_btn">
+                  검색
+                </button>
+              </div>
+              <div
+                className={
+                  "search_history_wrapper" + (toggleDisplay ? " on" : "")
+                }
+              >
+                <ul className="search_history_list">
+                  {historyList.map((item) => (
+                    <li key={item}>
+                      <div>{item}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </SearchWrapper>
+        </section>
+        <section>
+          <HiddenH2>Contents Area</HiddenH2>
+          <ul>
+            {newsList.map((item) => (
+              <ListItem
+                key={item._id}
+                id={item._id}
+                main={item.headline.main}
+                date={item.pub_date}
+                section={item.section_name}
+                multimedia={item.multimedia}
+                web_url={item.web_url}
+              />
+            ))}
+          </ul>
+        </section>
       </Main>
     </Container>
   );

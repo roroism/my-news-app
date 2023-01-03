@@ -1,5 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
+import { HiddenH1, HiddenH2 } from "./MainPage";
 
 const ButtonDiv = styled.div`
   padding: 1rem 0;
@@ -32,17 +33,21 @@ const Header = ({ match }) => {
 
   return (
     <HeaderDiv>
-      <ButtonDiv>
-        {pathname === "/" ? (
-          <Link to="/clip">
-            <button type="button">Clipped News</button>
-          </Link>
-        ) : pathname === "/clip" ? (
-          <Link to="/">
-            <button type="button">Search News</button>
-          </Link>
-        ) : null}
-      </ButtonDiv>
+      <HiddenH1>Searching News App</HiddenH1>
+      <nav>
+        <HiddenH2>Navigation Area</HiddenH2>
+        <ButtonDiv>
+          {pathname === "/" ? (
+            <Link to="/clip">
+              <button type="button">Clipped News</button>
+            </Link>
+          ) : pathname === "/clip" ? (
+            <Link to="/">
+              <button type="button">Search News</button>
+            </Link>
+          ) : null}
+        </ButtonDiv>
+      </nav>
     </HeaderDiv>
   );
 };
