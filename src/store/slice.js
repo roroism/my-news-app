@@ -62,7 +62,7 @@ export const fetchNewsbySearch = createAsyncThunk(
   "newsSlice/fetchNewsbySearch",
   async (searchInfo, thunkAPI) => {
     try {
-      console.log("createAsyncThunk 진입 : ", getUrl(searchInfo));
+      // console.log("createAsyncThunk 진입 : ", getUrl(searchInfo));
       const res = await fetch(getUrl(searchInfo));
       const jsonData = await res.json();
       // console.log("jsonData", jsonData);

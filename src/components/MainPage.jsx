@@ -226,8 +226,8 @@ const MainPage = () => {
               >
                 <ul className="search_history_list">
                   {historyList.map((item) => (
-                    <li>
-                      <div key={item}>{item}</div>
+                    <li key={item}>
+                      <div>{item}</div>
                     </li>
                   ))}
                 </ul>
