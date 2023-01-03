@@ -149,7 +149,7 @@ export default function ListItem({
     });
   };
 
-  console.log("ListItem clipNewsList : ", clipNewsList);
+  // console.log("ListItem clipNewsList : ", clipNewsList);
 
   return (
     <NewsItem>

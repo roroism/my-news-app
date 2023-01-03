@@ -148,11 +148,11 @@ const MainPage = () => {
 
     if (searchwords) {
       setTime = setTimeout(() => {
-        dispatch(setPage(1));
+        dispatch(setPage(0));
         // callbackWithSetHistoryToLocalStorage(() => {
         //   dispatch(fetchNewsbySearch({ q: searchwords, page: 1 }));
         // });
-        dispatch(fetchNewsbySearch({ q: searchwords, page: 1 }));
+        dispatch(fetchNewsbySearch({ q: searchwords, page: 0 }));
       }, 500);
     }
 
@@ -175,7 +175,7 @@ const MainPage = () => {
     let fullHeight = document.body.scrollHeight; //  margin 값은 포함 x
     const offset = 500;
     setIsScrollBottom(scrollLocation + windowHeight >= fullHeight - offset);
-    console.log("scrollTop : ", scrollLocation);
+    // console.log("scrollTop : ", scrollLocation);
   };
 
   useEffect(() => {
@@ -187,7 +187,7 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log("isScrollBottom : ", isScrollBottom);
+    // console.log("isScrollBottom : ", isScrollBottom);
     if (isScrollBottom) {
       dispatch(setPage(page + 1));
       dispatch(fetchNewsbySearch({ q: searchwords, page: page + 1 }));

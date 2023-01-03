@@ -14,23 +14,23 @@ export const setHistoryToLocalStorage = createAction(
 );
 
 export const setLocalStorageMiddleware = (store) => (next) => (action) => {
-  console.log("Middleware 진입", action);
+  // console.log("Middleware 진입", action);
 
   if (action.type === "newsSlice/fetchNewsbySearch/fulfilled") {
-    console.log("newsSlice/fetchNewsbySearch/fulfilled 진입");
+    // console.log("newsSlice/fetchNewsbySearch/fulfilled 진입");
     // 중복제거
     const storeHistoryList = [...store.getState().history.history];
     storeHistoryList.unshift(action.meta.arg.q);
     const updateHistoryList = [...new Set(storeHistoryList)];
     if (updateHistoryList.length >= 6) updateHistoryList.length = 5;
-    console.log("storeHistoryList : ", updateHistoryList);
+    // console.log("storeHistoryList : ", updateHistoryList);
     store.dispatch(historySlice.actions.addHistory(updateHistoryList));
     store.dispatch(setHistoryToLocalStorage());
   }
 
   // {type: "타입이름", payload: {}}
   if (action.type === "updateClipLocalStorage") {
-    console.log("updateClipLocalStorage 진입");
+    // console.log("updateClipLocalStorage 진입");
     try {
       const storeClipList = [...store.getState().history.clip];
       localStorage.setItem(NEWS_CLIP_KEY, JSON.stringify(storeClipList));
@@ -41,9 +41,9 @@ export const setLocalStorageMiddleware = (store) => (next) => (action) => {
   }
 
   if (action.type === "setHistoryToLocalStorage") {
-    console.log("setHistoryToLocalStorage 진입");
+    // console.log("setHistoryToLocalStorage 진입");
     const storeHistoryList = [...store.getState().history.history];
-    console.log("storeHistoryList : ", storeHistoryList);
+    // console.log("storeHistoryList : ", storeHistoryList);
     try {
       localStorage.setItem(
         SEARCH_HISTORY_KEY,
@@ -65,7 +65,7 @@ export const fetchNewsbySearch = createAsyncThunk(
       // console.log("createAsyncThunk 진입 : ", getUrl(searchInfo));
       const res = await fetch(getUrl(searchInfo));
       const jsonData = await res.json();
-      // console.log("jsonData", jsonData);
+      console.log("jsonData : ", jsonData);
       return jsonData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -79,7 +79,7 @@ export const newsSlice = createSlice({
     news: [],
     loading: true,
     error: "",
-    page: 1,
+    page: 0,
   },
   reducers: {
     setPage: (state, action) => {
@@ -97,7 +97,7 @@ export const newsSlice = createSlice({
 
     builder.addCase(fetchNewsbySearch.fulfilled, (state, action) => {
       console.log("action.payload.response.docs", action.payload.response.docs);
-      if (state.page === 1) {
+      if (state.page === 0) {
         console.log("if state.page : ", state.page);
         state.news = action.payload.response.docs;
       } else {
