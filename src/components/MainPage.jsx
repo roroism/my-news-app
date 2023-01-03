@@ -142,6 +142,8 @@ const MainPage = () => {
   // );
 
   useEffect(() => {
+    if (searchwords === "") return;
+
     let setTime;
 
     if (searchwords) {
@@ -193,7 +195,7 @@ const MainPage = () => {
   }, [isScrollBottom, dispatch]);
 
   const handleChange = (e) => {
-    setSearchWords(e.target.value);
+    setSearchWords(e.target.value.trim());
   };
 
   return (
@@ -207,7 +209,7 @@ const MainPage = () => {
                 type="text"
                 onChange={handleChange}
                 onFocus={() => {
-                  setToggleDisplay(true);
+                  if (historyList.length > 0) setToggleDisplay(true);
                 }}
                 onBlur={() => {
                   setToggleDisplay(false);
