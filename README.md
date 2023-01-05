@@ -27,32 +27,32 @@ react를 사용하여 뉴스를 검색하고, 원하는 뉴스를 클립하는 �
 
 ### 기본 요구사항 - news
 
-- [ ] news 리스트가 잘 렌더되는가
-- [ ] 각각의 news 카드는 타이틀, 날짜, clip하기버튼, 자세히 보기 버튼을 포함하는가
-- [ ] input에서 enter나 검색 버튼을 누르지 않아도 api를 호출하는가
-- [ ] 자세히보기 버튼 클릭 시 해당 기사를 새 탭에서 open 하는가
-- [ ] 뉴스를 추가로 불러올 수 있는가 (button을 클릭해서라도)
-- [ ] news list는 브라우저를 종료했을 때 잘 초기화되는가
-- [ ] news list 렌더 시 최적화를 위한 key가 적절히 작성되어 있는가
+- [x] news 리스트가 잘 렌더되는가
+- [x] 각각의 news 카드는 타이틀, 날짜, clip하기버튼, 자세히 보기 버튼을 포함하는가
+- [x] input에서 enter나 검색 버튼을 누르지 않아도 api를 호출하는가
+- [x] 자세히보기 버튼 클릭 시 해당 기사를 새 탭에서 open 하는가
+- [x] 뉴스를 추가로 불러올 수 있는가 (button을 클릭해서라도)
+- [x] news list는 브라우저를 종료했을 때 잘 초기화되는가
+- [x] news list 렌더 시 최적화를 위한 key가 적절히 작성되어 있는가
 
 ### 기본 요구사항 - clip
 
-- [ ] clip 버튼을 클릭하여 clip을 추가하고, "/clip" 페이지에서 확인가능한가
-- [ ] clip 버튼과 upclip 버튼이 토글 가능하고, upclip시 "/clip" 페이지에서 삭제되는가
-- [ ] clip list는 브라우저를 종료해도 지속되는가
+- [x] clip 버튼을 클릭하여 clip을 추가하고, "/clip" 페이지에서 확인가능한가
+- [x] clip 버튼과 upclip 버튼이 토글 가능하고, upclip시 "/clip" 페이지에서 삭제되는가
+- [x] clip list는 브라우저를 종료해도 지속되는가
 
 ### 기본 요구사항 - search
 
-- [ ] 검색 시 search history가 잘 추가되는가
-- [ ] search history가 존재하는 경우만 노출하는가
-- [ ] input에 focus중일 때만 search history를 노출하는가
-- [ ] search history는 최대 5개까지만 저장되는가
-- [ ] search history는 브라우저를 종료해도 지속되는가
+- [x] 검색 시 search history가 잘 추가되는가
+- [x] search history가 존재하는 경우만 노출하는가
+- [x] input에 focus중일 때만 search history를 노출하는가
+- [x] search history는 최대 5개까지만 저장되는가
+- [x] search history는 브라우저를 종료해도 지속되는가
 
 ### 프로젝트 완성도
 
-- [ ] scroll을 내리는 경우 추가로 뉴스를 불러오는가
-- [ ] 화면에 보이지 않는 card는 최적화를 위해 렌더하지 않도록 처리하였는가
-- [ ] input 입력 후 0.5초동안 추가입력이 없는 경우에만 api를 호출하는가
-- [ ] input value가 있는 경우만 api를 호출하였는가
-- [ ] 새 탭에서 외부 url을 open하는 경우, 보안 및 최적화를 위한 attribute를 추가하였는가
+- [x] scroll을 내리는 경우 추가로 뉴스를 불러오는가
+- [x] 화면에 보이지 않는 card는 최적화를 위해 렌더하지 않도록 처리하였는가
+- [x] input 입력 후 0.5초동안 추가입력이 없는 경우에만 api를 호출하는가
+- [x] input value가 있는 경우만 api를 호출하였는가
+- [x] 새 탭에서 외부 url을 open하는 경우, 보안 및 최적화를 위한 attribute를 추가하였는가
