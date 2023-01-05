@@ -80,6 +80,9 @@ export const newsSlice = createSlice({
     loading: true,
     error: "",
     page: 0,
+    hits: 0,
+    offset: 0,
+    volume: 10,
   },
   reducers: {
     setPage: (state, action) => {
@@ -107,6 +110,8 @@ export const newsSlice = createSlice({
         state.news = [...state.news, ...action.payload.response.docs];
         console.log("new state.news", state.news);
       }
+      state.hits = action.payload.response.meta.hits;
+      state.offset = action.payload.response.meta.offset;
       state.loading = false;
       state.error = "";
     });
