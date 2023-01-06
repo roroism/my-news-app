@@ -34,6 +34,7 @@ const SearchWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 30px;
   .search {
     margin-bottom: 1rem;
     position: relative;
@@ -123,7 +124,7 @@ const Main = styled.main`
 
 const VisualImageWrap = styled.div`
   margin: 0 auto;
-  width: 80%;
+  width: 70%;
   padding: 50px 0;
 `;
 
