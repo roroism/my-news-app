@@ -121,6 +121,17 @@ const Main = styled.main`
   width: 100%;
 `;
 
+const VisualImageWrap = styled.div`
+  margin: 0 auto;
+  width: 80%;
+  padding: 50px 0;
+`;
+
+const VisualImage = styled.img`
+  width: 100%;
+  display: block;
+`;
+
 const MainPage = () => {
   const [searchwords, setSearchWords] = useState();
   // const [page, setPage] = useState(1);
@@ -201,6 +212,9 @@ const MainPage = () => {
   return (
     <Container ref={containerRef}>
       <Main>
+        <VisualImageWrap>
+          <VisualImage src="../img/The_New_York_Times_logo.png" />
+        </VisualImageWrap>
         <section>
           <HiddenH2>Search Area</HiddenH2>
           <SearchWrapper>
