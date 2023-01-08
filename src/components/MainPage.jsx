@@ -214,7 +214,10 @@ const MainPage = () => {
     <Container ref={containerRef}>
       <Main>
         <VisualImageWrap>
-          <VisualImage src="../img/The_New_York_Times_logo.png" />
+          <VisualImage
+            src="../img/The_New_York_Times_logo.png"
+            alt="visual image"
+          />
         </VisualImageWrap>
         <section>
           <HiddenH2>Search Area</HiddenH2>
